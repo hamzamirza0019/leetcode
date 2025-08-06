@@ -5,7 +5,7 @@ public:
         for(int i=0; i<weights.size(); ++i){
             r+= weights[i];
         }
-        int l=0, minCapacity = 0;
+        int l = *max_element(weights.begin(), weights.end()), minCapacity = 0;
         while(l<=r){
             int mid = (l+r)/2;
             if(check(weights, mid, days)){
