@@ -13,13 +13,13 @@ class Solution {
 
             i--;
         }
-        String str="";
+        StringBuilder str=new StringBuilder();
         while(st.size()>0){
-            str+=st.peek();
+            str.append(st.peek());
             st.pop();
         }
 
-        return str;
+        return str.toString();
 
     }
 
