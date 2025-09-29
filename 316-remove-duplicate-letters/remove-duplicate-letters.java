@@ -1,39 +1,31 @@
 class Solution {
     public String removeDuplicateLetters(String s) {
-        HashMap< Character, Integer> hm = new HashMap<>();
-        HashSet<Character> hs = new HashSet<>();
-        Stack<Character> st = new Stack<>();
+        HashMap<Character, Integer> freq = new HashMap<>();
+        HashSet<Character> inStack = new HashSet<>();
+        Stack<Character> stack = new Stack<>();
         
-        for(char ch : s.toCharArray() ){
-            hm.put(ch, hm.getOrDefault(ch, 0) +1);
+        for (char ch : s.toCharArray()) {
+            freq.put(ch, freq.getOrDefault(ch, 0) + 1);
         }
 
-        for( int i=0; i<s.length(); ++i ){
-            char ch = s.charAt(i);
-            if(hs.contains(ch)){
-                hm.put(ch, hm.get(ch) - 1);
+        for (char ch : s.toCharArray()) {
+            freq.put(ch, freq.get(ch) - 1);
 
-            }
-            else{
-            while( !st.isEmpty() && st.peek()>ch && hm.get(st.peek() )>0){
-                hs.remove(st.peek());
-                st.pop();
+            if (inStack.contains(ch)) continue;
+
+            while (!stack.isEmpty() && stack.peek() > ch && freq.get(stack.peek()) > 0) {
+                inStack.remove(stack.pop());
             }
 
-            st.push(ch);
-            hs.add(ch);
-            hm.put(ch, hm.get(ch) - 1);
-            }
-
-
-        }
-        StringBuilder str = new StringBuilder();
-        while( !st.isEmpty() ){
-            str.append(st.pop());
+            stack.push(ch);
+            inStack.add(ch);
         }
 
-        return str.reverse().toString();
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty()) {
+            sb.append(stack.pop());
+        }
 
-        
+        return sb.reverse().toString();
     }
 }
