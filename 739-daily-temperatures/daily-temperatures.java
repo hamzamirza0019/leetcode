@@ -1,31 +1,32 @@
+// import java.util.*;
+
 class Pair {
-    int key;
-    int value;
-    Pair(int key, int value) {
-        this.key = key;
-        this.value = value;
+    int temp;   
+    int index;  
+
+    Pair(int temp, int index) {
+        this.temp = temp;
+        this.index = index;
     }
 }
+
 class Solution {
     public int[] dailyTemperatures(int[] temperatures) {
         int n = temperatures.length;
-        int[] arr =new int[n];
+        int[] result = new int[n];
         Stack<Pair> st = new Stack<>();
-        for(int i=n-1; i>=0; --i){
-            while(st.size()>0 && st.peek().key <= temperatures[i]){
-                int val  = st.pop().value;
-                if(st.size()>0) st.peek().value+=val;
+
+        for (int i = 0; i < n; i++) {
+
+            while (!st.isEmpty() && temperatures[i] > st.peek().temp) {
+                Pair pair = st.pop();
+                result[pair.index] = i - pair.index; 
             }
 
-            if(st.size()>0) arr[i] = st.peek().value;
-            else arr[i] =0;
-            Pair p = new Pair(temperatures[i], 1);
-            st.push(p);
 
+            st.push(new Pair(temperatures[i], i));
         }
 
-        return arr;
-        
-
+        return result;
     }
 }
